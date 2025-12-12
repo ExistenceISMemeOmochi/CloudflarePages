@@ -1,42 +1,316 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* src/App.css */
+
+/* 基本的なリセット */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'MS UI Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* XPの標準フォントに近いもの */
+  background: #3a6ea5; /* XPのデフォルト背景色 */
+  overflow: hidden; /* デスクトップ感を出すためにスクロールバーを隠す */
+}
+
+/* XPデスクトップ全体 */
+.xp-desktop {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* タスクバーを下に固定 */
+  align-items: center;
+  position: relative;
+}
+
+/* XPウィンドウのスタイル */
+.xp-window {
+  background-color: #ece9d8; /* XPウィンドウの背景色 */
+  border: 1px solid #7f9db9;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+  width: 800px;
+  max-width: 90vw;
+  height: 600px;
+  max-height: 80vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  resize: both; /* リサイズ可能にする */
+  overflow: auto; /* ウィンドウ内容がはみ出たらスクロール */
+}
+
+.xp-title-bar {
+  background: linear-gradient(to right, #0a246a, #a6caf0); /* XPタイトルバーのグラデーション */
+  color: white;
+  padding: 3px 5px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab; /* ドラッグできることを示すカーソル */
+  flex-shrink: 0; /* 高さを固定 */
+}
+
+.xp-window-title {
+  font-size: 14px;
+}
+
+.xp-window-controls {
+  display: flex;
+}
+
+.xp-control-button {
+  background-color: #ece9d8;
+  border: 1px solid #000;
+  width: 20px;
+  height: 18px;
+  margin-left: 2px;
+  font-size: 12px;
+  line-height: 1;
   text-align: center;
+  cursor: pointer;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #848284;
+  border-right: 1px solid #848284;
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.xp-control-button:active {
+  background-color: #a6caf0;
+  border-top: 1px solid #848284;
+  border-left: 1px solid #848284;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.2);
+}
+.xp-control-button.close {
+  background-color: #ff3333; /* 閉じるボタンは赤く */
+  color: white;
+  border: 1px solid #660000;
+}
+.xp-control-button.close:active {
+  background-color: #cc0000;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+
+/* メニューバー */
+.xp-menu-bar {
+  background-color: #ece9d8;
+  border-bottom: 1px solid #7f9db9;
+  padding: 2px 5px;
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  flex-shrink: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.xp-menu-bar span {
+  padding: 0 3px;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.xp-menu-bar span:hover {
+  background-color: #316ac5;
+  color: white;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ツールバー */
+.xp-toolbar {
+  background-color: #ece9d8;
+  border-bottom: 1px solid #7f9db9;
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.xp-toolbar button {
+  background-color: #ece9d8;
+  border: 1px solid #000;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #848284;
+  border-right: 1px solid #848284;
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
+.xp-toolbar button:active {
+  background-color: #a6caf0;
+  border-top: 1px solid #848284;
+  border-left: 1px solid #848284;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
+/* ウィンドウのコンテンツエリア */
+.xp-content {
+  padding: 15px;
+  flex-grow: 1; /* 残りのスペースを占める */
+  overflow-y: auto; /* コンテンツがはみ出たらスクロール */
+  color: #333;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-.card {
-  padding: 2em;
+.xp-content h1 {
+  color: #0a246a;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 0 #fff;
+}
+.xp-content h2 {
+  color: #0a246a;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  border-bottom: 1px dotted #a6caf0;
+  padding-bottom: 3px;
+}
+.xp-content hr {
+  border: none;
+  border-top: 1px solid #a6caf0;
+  margin: 20px 0;
 }
 
-.read-the-docs {
-  color: #888;
+.server-details p {
+  margin: 5px 0;
+  padding-left: 15px;
+  position: relative;
+}
+.server-details p::before {
+  content: '▶'; /* 矢印アイコン */
+  position: absolute;
+  left: 0;
+  color: #0a246a;
+}
+.api-info {
+  background-color: #fff;
+  border: 1px solid #7f9db9;
+  padding: 10px;
+  margin-top: 15px;
+}
+.api-info p {
+  margin: 5px 0;
+}
+.api-info strong {
+  color: #0a246a;
+}
+
+/* XPステータスバー */
+.xp-status-bar {
+  background-color: #ece9d8;
+  border-top: 1px solid #7f9db9;
+  padding: 2px 5px;
+  font-size: 11px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.xp-status-bar.error {
+  color: red;
+  font-weight: bold;
+}
+
+
+/* XPタスクバー */
+.xp-taskbar {
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(to top, #3a6ea5, #a6caf0); /* XPタスクバーのグラデーション */
+  border-top: 1px solid #7f9db9;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  box-sizing: border-box;
+  flex-shrink: 0; /* 高さを固定 */
+  position: relative;
+  z-index: 1000; /* 最前面に表示 */
+}
+
+.xp-start-button {
+  background: linear-gradient(to bottom, #7bb93b, #3b8b1b); /* XPスタートボタンのグラデーション */
+  color: white;
+  border: 1px solid #000;
+  border-top: 1px solid #bce19d;
+  border-left: 1px solid #bce19d;
+  border-bottom: 1px solid #003300;
+  border-right: 1px solid #003300;
+  padding: 2px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
+.xp-start-button:active {
+  background: linear-gradient(to bottom, #3b8b1b, #7bb93b);
+  border-top: 1px solid #003300;
+  border-left: 1px solid #003300;
+  border-bottom: 1px solid #bce19d;
+  border-right: 1px solid #bce19d;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.2);
+}
+.start-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.xp-quick-launch {
+  flex-grow: 1;
+  border-left: 1px solid #a6caf0;
+  height: 100%;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  gap: 5px;
+}
+
+.xp-taskbar-clock {
+  background-color: #ece9d8;
+  border: 1px solid #7f9db9;
+  border-top: 1px solid #848284;
+  border-left: 1px solid #848284;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  padding: 2px 8px;
+  font-size: 12px;
+  text-align: right;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* 時計を右寄せ */
+}
+
+/* スクロールバーのスタイル（XP風） */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-button {
+  background-color: #d4d0c8;
+  border: 1px solid #000;
+}
+::-webkit-scrollbar-track {
+  background-color: #ece9d8;
+  border: 1px solid #7f9db9;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border: 1px solid #808080;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #808080;
+  border-right: 1px solid #808080;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+::-webkit-scrollbar-corner {
+  background-color: #ece9d8;
 }
